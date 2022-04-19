@@ -43,12 +43,13 @@ namespace WpfApp1.page
 
         private void AddBacket_Click(object sender, RoutedEventArgs e)
         {
-
+            Button BTN = (Button)sender;
+            int ind = Convert.ToInt32(BTN.Uid);
             var item = MainGrid.SelectedItem as BookShop;
-            Basket basket_find = Core.DB.Basket.Find(item.id);
+            Basket basket_find = Core.DB.Basket.Find(ind);
             if (basket_find != null)
             {
-                Basket basket = Core.DB.Basket.Find(item.id);
+                Basket basket = Core.DB.Basket.Find(ind);
                 if (basket != null)
                 {
                     basket.quantity = basket.quantity + 1;

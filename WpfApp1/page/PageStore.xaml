@@ -56,7 +56,10 @@
                                 <TextBlock Text="{Binding descriptionString}" TextWrapping="Wrap"/>
                             </StackPanel>
                             <StackPanel Grid.Column="2">
-                                <Button x:Name="AddBacket" Content="Добавить в корзину" Click="AddBacket_Click" />
+                                <Button x:Name="AddBacket" 
+                                        Content="Добавить в корзину" 
+                                        Click="AddBacket_Click" 
+                                        Uid="{Binding id}"/>
                             </StackPanel>
                         </Grid>
                     </Border>
