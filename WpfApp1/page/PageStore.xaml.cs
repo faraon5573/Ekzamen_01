@@ -84,6 +84,7 @@ namespace WpfApp1.page
                 basket.author = item.author;
                 basket.price = item.price;
                 basket.quantity = 1;
+                item.quantity_store = item.quantity_store - 1;
                 basket.cover = item.cover;
                 Basket dist_find_1 = Core.DB.Basket.Find(item.id);
                 if (dist_find_1 == null)
