@@ -43,6 +43,7 @@ namespace WpfApp1.page
 
         private void AddBacket_Click(object sender, RoutedEventArgs e)
         {
+            //добавление в корзину
             Button BTN = (Button)sender;
             int ind = Convert.ToInt32(BTN.Uid);
             var item = MainGrid.SelectedItem as BookShop;

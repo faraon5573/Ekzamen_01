@@ -120,6 +120,7 @@ namespace WpfApp1
                 return Convert.ToInt32(price ?? 0);
             }
         }
+        //скидка
         public string PriceWithDiscount
         {
             get
@@ -157,6 +158,7 @@ namespace WpfApp1
                 return quantity >= 3;
             }
         }
+        //перечёркивание старой цены
         public string PriceTextDecoration
         {
             get
