@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,8 +20,9 @@ namespace WpfApp1.page
     /// <summary>
     /// Логика взаимодействия для PageBacket.xaml
     /// </summary>
-    public partial class PageBacket : Page
+    public partial class PageBacket : Page, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         private List<Basket> _BasketList;
         public List<Basket> BasketList
         {
@@ -46,6 +48,21 @@ namespace WpfApp1.page
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void DeleteBacket_Click(object sender, RoutedEventArgs e)
+        {
+            Button BTN = (Button)sender;
+            int ind = Convert.ToInt32(BTN.Uid);
+            var item = MainGrid.SelectedItem as Basket;
+
+            Core.DB.Basket.Remove(item);
+            Core.DB.SaveChanges();
+            BasketList = Core.DB.Basket.ToList();
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs("BasketList"));
+            }
         }
     }
 }

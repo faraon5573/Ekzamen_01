@@ -53,7 +53,7 @@
                                 <TextBlock Text="{Binding priceString}"/>
                                 <TextBlock Text="{Binding quantity_storeString}"/>
                                 <TextBlock Text="{Binding quantity_stockString}"/>
-                                <TextBlock Text="{Binding descriptionString}" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding descriptionString}"/>
                             </StackPanel>
                             <StackPanel Grid.Column="2">
                                 <Button x:Name="AddBacket" 

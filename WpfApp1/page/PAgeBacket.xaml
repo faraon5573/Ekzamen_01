@@ -33,6 +33,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
                             <StackPanel>
                                 <Image x:Name="UserImage" Height="200" Source="{Binding ImageUri}"/>
@@ -47,6 +48,12 @@
                                     <TextBlock Text=" руб."/>
                                 </StackPanel>
                                 <TextBlock Text="{Binding quantityString}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Margin="5" >
+                                <Button x:Name="DeleteBacket" 
+                                        Content="Удалить книгу" 
+                                        Click="DeleteBacket_Click" 
+                                        Uid="{Binding id}"/>
                             </StackPanel>
                         </Grid>
                     </Border>
