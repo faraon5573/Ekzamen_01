@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище P_Tesnov_1Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Basket">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" />
+          <Property Name="id_genre" Type="int" />
+          <Property Name="author" Type="nvarchar(max)" />
+          <Property Name="price" Type="int" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="cover" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="BookShop">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" />
+          <Property Name="id_genre" Type="int" />
+          <Property Name="author" Type="nvarchar(max)" />
+          <Property Name="price" Type="int" />
+          <Property Name="quantity_store" Type="int" />
+          <Property Name="quantity_stock" Type="int" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="cover" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name_book" Type="nvarchar(max)" />
+          <Property Name="number_books" Type="int" />
+          <Property Name="price" Type="int" />
+          <Property Name="discount" Type="float" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="reservation" Type="time" Precision="7" />
+        </EntityType>
+        <Association Name="FK_Basket_BookShop">
+          <End Role="BookShop" Type="Self.BookShop" Multiplicity="1" />
+          <End Role="Basket" Type="Self.Basket" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="BookShop">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Basket">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Basket_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="0..1" />
+          <End Role="Basket" Type="Self.Basket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Basket">
+              <PropertyRef Name="id_genre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BookShop_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="0..1" />
+          <End Role="BookShop" Type="Self.BookShop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BookShop">
+              <PropertyRef Name="id_genre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище P_Tesnov_1ModelContainer">
+          <EntitySet Name="Basket" EntityType="Self.Basket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BookShop" EntityType="Self.BookShop" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Basket_BookShop" Association="Self.FK_Basket_BookShop">
+            <End Role="BookShop" EntitySet="BookShop" />
+            <End Role="Basket" EntitySet="Basket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Basket_Genre" Association="Self.FK_Basket_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="Basket" EntitySet="Basket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BookShop_Genre" Association="Self.FK_BookShop_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="BookShop" EntitySet="BookShop" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="P_Tesnov_1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Basket" Relationship="P_Tesnov_1Model.FK_Basket_Genre" FromRole="Genre" ToRole="Basket" />
+          <NavigationProperty Name="BookShop" Relationship="P_Tesnov_1Model.FK_BookShop_Genre" FromRole="Genre" ToRole="BookShop" />
+        </EntityType>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Genre" EntityType="Self.Genre" />
+          <EntitySet Name="Basket" EntityType="P_Tesnov_1Model.Basket" />
+          <EntitySet Name="BookShop" EntityType="P_Tesnov_1Model.BookShop" />
+          <AssociationSet Name="FK_Basket_BookShop" Association="P_Tesnov_1Model.FK_Basket_BookShop">
+            <End Role="BookShop" EntitySet="BookShop" />
+            <End Role="Basket" EntitySet="Basket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Basket_Genre" Association="P_Tesnov_1Model.FK_Basket_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="Basket" EntitySet="Basket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BookShop_Genre" Association="P_Tesnov_1Model.FK_BookShop_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="BookShop" EntitySet="BookShop" />
+          </AssociationSet>
+          <EntitySet Name="Order" EntityType="P_Tesnov_1Model.Order" />
+        </EntityContainer>
+        <EntityType Name="Basket">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="id_genre" Type="Int32" />
+          <Property Name="author" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Int32" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="cover" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BookShop" Relationship="P_Tesnov_1Model.FK_Basket_BookShop" FromRole="Basket" ToRole="BookShop" />
+          <NavigationProperty Name="Genre" Relationship="P_Tesnov_1Model.FK_Basket_Genre" FromRole="Basket" ToRole="Genre" />
+        </EntityType>
+        <EntityType Name="BookShop">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="id_genre" Type="Int32" />
+          <Property Name="author" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Int32" />
+          <Property Name="quantity_store" Type="Int32" />
+          <Property Name="quantity_stock" Type="Int32" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="cover" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Basket" Relationship="P_Tesnov_1Model.FK_Basket_BookShop" FromRole="BookShop" ToRole="Basket" />
+          <NavigationProperty Name="Genre" Relationship="P_Tesnov_1Model.FK_BookShop_Genre" FromRole="BookShop" ToRole="Genre" />
+        </EntityType>
+        <Association Name="FK_Basket_BookShop">
+          <End Type="P_Tesnov_1Model.BookShop" Role="BookShop" Multiplicity="1" />
+          <End Type="P_Tesnov_1Model.Basket" Role="Basket" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="BookShop">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Basket">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Basket_Genre">
+          <End Type="P_Tesnov_1Model.Genre" Role="Genre" Multiplicity="0..1" />
+          <End Type="P_Tesnov_1Model.Basket" Role="Basket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Basket">
+              <PropertyRef Name="id_genre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BookShop_Genre">
+          <End Type="P_Tesnov_1Model.Genre" Role="Genre" Multiplicity="0..1" />
+          <End Type="P_Tesnov_1Model.BookShop" Role="BookShop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BookShop">
+              <PropertyRef Name="id_genre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name_book" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="number_books" Type="Int32" />
+          <Property Name="price" Type="Int32" />
+          <Property Name="discount" Type="Double" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="reservation" Type="Time" Precision="7" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище P_Tesnov_1ModelContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Genre">
+            <EntityTypeMapping TypeName="P_Tesnov_1Model.Genre">
+              <MappingFragment StoreEntitySet="Genre">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Basket">
+            <EntityTypeMapping TypeName="P_Tesnov_1Model.Basket">
+              <MappingFragment StoreEntitySet="Basket">
+                <ScalarProperty Name="cover" ColumnName="cover" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="id_genre" ColumnName="id_genre" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookShop">
+            <EntityTypeMapping TypeName="P_Tesnov_1Model.BookShop">
+              <MappingFragment StoreEntitySet="BookShop">
+                <ScalarProperty Name="cover" ColumnName="cover" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="quantity_stock" ColumnName="quantity_stock" />
+                <ScalarProperty Name="quantity_store" ColumnName="quantity_store" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="id_genre" ColumnName="id_genre" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="P_Tesnov_1Model.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="reservation" ColumnName="reservation" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="number_books" ColumnName="number_books" />
+                <ScalarProperty Name="name_book" ColumnName="name_book" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
