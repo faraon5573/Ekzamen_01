@@ -96,6 +96,7 @@ namespace WpfApp1.page
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("BookShopList"));
                 }
+
             }
         }
     }
