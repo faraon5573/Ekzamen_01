@@ -53,8 +53,22 @@ namespace WpfApp1.page
                 Basket basket = Core.DB.Basket.Find(ind);
                 if (basket != null)
                 {
-                    basket.quantity = basket.quantity + 1;
+                    if(item.quantity_store !=0)
+                    {
+                        basket.quantity = basket.quantity + 1;
+                        item.quantity_store = item.quantity_store - 1;
+                    }
+                    else if (item.quantity_stock != 0)
+                    {
+                        basket.quantity = basket.quantity + 1;
+                        item.quantity_stock = item.quantity_stock - 1;
+                    }
+                    else if(item.quantity_store == 0 && item.quantity_stock == 0)
+                    {
+                        MessageBox.Show("Больше нет книг");
+                    }
                     Core.DB.SaveChanges();
+                    BookShopList = Core.DB.BookShop.ToList();
                 }
                 if (PropertyChanged != null)
                 {
